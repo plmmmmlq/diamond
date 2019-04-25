@@ -1,10 +1,11 @@
 package com.wingsoft.demo.global
 
-import android.content.Context
-import android.net.ConnectivityManager
-
 /**
- * Created by yanshirong on 2017/6/9.
+ * Constants
+ *
+ * @author 祁连山
+ * @date 2019-04-25
+ * @version 1.0
  */
 object Constants {
 

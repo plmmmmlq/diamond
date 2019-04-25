@@ -8,6 +8,13 @@ import android.util.DisplayMetrics
 import android.view.WindowManager
 import androidx.multidex.MultiDex
 
+/**
+ * AppContext
+ *
+ * @author 祁连山
+ * @date 2019-04-25
+ * @version 1.0
+ */
 class AppContext : Application() {
 
     private var allActivities: MutableSet<Activity>? = null

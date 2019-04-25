@@ -7,7 +7,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 /**
- * BaseActivity
+ * BaseFragment
  *
  * @author 祁连山
  * @date 2019-04-24

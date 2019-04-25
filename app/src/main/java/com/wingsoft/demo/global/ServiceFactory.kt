@@ -19,6 +19,13 @@ import retrofit2.http.QueryMap
 import java.io.File
 import java.util.concurrent.TimeUnit
 
+/**
+ * ServiceFactory
+ *
+ * @author 祁连山
+ * @date 2019-04-25
+ * @version 1.0
+ */
 class ServiceFactory {
 
     interface ServiceApi {
@@ -36,17 +43,17 @@ class ServiceFactory {
         fun create() = provideRetrofit().create(ServiceApi::class.java)
 
         private fun createRetrofit(builder: Retrofit.Builder, client: OkHttpClient, gson: Gson, url: String) =
-                builder.baseUrl(url)
-                        .client(client)
-                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .build()
+            builder.baseUrl(url)
+                .client(client)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
 
         private fun provideRetrofit() = createRetrofit(
-                Retrofit.Builder(),
-                provideHttpClient(OkHttpClient.Builder()),
-                provideGsonObject(),
-                ServiceApi.HOST
+            Retrofit.Builder(),
+            provideHttpClient(OkHttpClient.Builder()),
+            provideGsonObject(),
+            ServiceApi.HOST
         )
 
         private fun provideGsonObject(): Gson = GsonBuilder().create()
@@ -63,24 +70,24 @@ class ServiceFactory {
                 var request = chain.request()
                 if (!AppContext.i.isNetworkConnected()) {
                     request = request.newBuilder()
-                            .cacheControl(CacheControl.FORCE_CACHE)
-                            .build()
+                        .cacheControl(CacheControl.FORCE_CACHE)
+                        .build()
                 }
                 val response = chain.proceed(request)
                 if (AppContext.i.isNetworkConnected()) {
                     val maxAge = 0
                     // 有网络时, 不缓存, 最大保存时长为0
                     response.newBuilder()
-                            .header("Cache-Control", "public, max-age=$maxAge")
-                            .removeHeader("Pragma")
-                            .build()
+                        .header("Cache-Control", "public, max-age=$maxAge")
+                        .removeHeader("Pragma")
+                        .build()
                 } else {
                     // 无网络时，设置超时为4周
                     val maxStale = 60 * 60 * 24 * 28
                     response.newBuilder()
-                            .header("Cache-Control", "public, only-if-cached, max-stale=$maxStale")
-                            .removeHeader("Pragma")
-                            .build()
+                        .header("Cache-Control", "public, only-if-cached, max-stale=$maxStale")
+                        .removeHeader("Pragma")
+                        .build()
                 }
                 response
             }
